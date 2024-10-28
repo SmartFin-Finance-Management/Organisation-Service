@@ -1,0 +1,18 @@
+import express from 'express';
+import { createOrg, getAllOrg, getOrgById, updateOrg  , deleteOrg, getProjectsByOrgId,getEmployeesByOrgId,getClientsByOrgId, addProjectToOrg,addClientToOrg,addEmployeeToOrg} from '../controller/organisationController';
+
+const router = express.Router();
+
+router.post('/Org', createOrg );
+router.get('/Org', getAllOrg );
+router.get('/Org/:id', getOrgById );
+router.put('/Org/:id', updateOrg );
+router.delete('/Org/:id', deleteOrg );
+router.get('/:orgId/projects', getProjectsByOrgId);
+router.get('/:orgId/employees',getEmployeesByOrgId);
+router.get('/:orgId/clients', getClientsByOrgId);
+router.post('/:orgId/projects', addProjectToOrg);
+router.post('/:orgId/clients', addClientToOrg);
+router.post('/:orgId/employees', addEmployeeToOrg);
+
+export default router;
