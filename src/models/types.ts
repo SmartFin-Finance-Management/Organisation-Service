@@ -37,6 +37,7 @@ export interface Employee {
     technical_budget: number;
     additional_budget: number;
     actual_expenses: number;
+    employees_list: number[];
 }
 
 export interface Client {
