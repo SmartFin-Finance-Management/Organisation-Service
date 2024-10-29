@@ -10,6 +10,6 @@ app.use(cors()); // Enable CORS
 
 app.use(express.json());
 
-app.use('/api', ORoutes);
+app.use('/', ORoutes);
 
 export default app;
