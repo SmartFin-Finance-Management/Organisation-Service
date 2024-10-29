@@ -1,7 +1,8 @@
 // models/types.ts
 export interface Employee { 
     employee_id: number;
-    org_id: number;
+    org_id: number; 
+    client_id: number; 
     name: string;
     email: string;
     role: string;
@@ -10,6 +11,7 @@ export interface Employee {
     lpa: number;
     hourly_rate: number;
     project_id: number;
+    project_history: number[];
     project_manager_id: number;
     attendance: Record<string, string>;
   }
@@ -23,21 +25,24 @@ export interface Employee {
   }
   
     export interface Project  {
-    project_id: number;
-    org_id: number;
-    client_id: number;
-    project_name: string;
-    start_date: Date;
-    end_date: Date;
-    status: string;
-    total_budget: number;
-    allocated_budget: number;
-    remaining_budget: number;
-    employee_budget: number;
-    technical_budget: number;
-    additional_budget: number;
-    actual_expenses: number;
-    employees_list: number[];
+      project_id: number;
+      org_id: number;
+      client_id: number;
+      project_name: string;
+      start_date: Date;
+      end_date: Date;
+      status: string;
+      total_budget: number;
+      allocated_budget: number;
+      remaining_budget: number;
+      employee_budget: number;
+      technical_budget: number;
+      additional_budget: number;
+      employee_expenses: number;
+      technical_expenses: number;
+      additional_expenses: number;
+      actual_expenses: number;
+      employees_list: number[];
 }
 
 export interface Client {
