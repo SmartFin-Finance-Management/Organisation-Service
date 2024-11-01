@@ -44,32 +44,32 @@ export const getOrgById = async (id: string) => {
 
 // Fetch employees by organisation ID
 export const getEmployeesByOrgId = async (orgId: string) => {
-    return await axios.get(`http://localhost:3000/api/employees/orgs/${orgId}`);
+    return await axios.get(`http://localhost:3000/employees/orgs/${orgId}`);
 };
 
 // Fetch projects by organisation ID
 export const getProjectsByOrgId = async (orgId: string) => {
-    return await axios.get(`http://localhost:4000/api/projects/orgs/${orgId}`);
+    return await axios.get(`http://localhost:4000/projects/orgs/${orgId}`);
 };
 
 // Fetch clients by organisation ID
 export const getClientsByOrgId = async (orgId: string) => {
-    return await axios.get(`http://localhost:6000/api/clients/orgs/${orgId}`);
+    return await axios.get(`http://localhost:6000/clients/orgs/${orgId}`);
 };
 
 // Add a new project to an organisation
 export const addProjectToOrg = async (orgId: string, projectData:Project ) => {
     projectData.org_id = parseInt(orgId, 10);
-    return await axios.post('http://localhost:4000/api/projects', projectData);
+    return await axios.post('http://localhost:4000/projects', projectData);
 };
 
 // Add a new client to an organisation
 export const addClientToOrg = async (orgId: string, clientData: Client) => {
     clientData.org_id =parseInt(orgId, 10);
-    return await axios.post('http://localhost:6000/api/clients', clientData);
+    return await axios.post('http://localhost:6000/clients', clientData);
 };
 // Add a new employee to an organisation
 export const addEmployeeToOrg = async (orgId: string, employeeData: Employee) => {
     employeeData.org_id = parseInt(orgId, 10);
-    return await axios.post('http://localhost:3000/api/employees', employeeData);
+    return await axios.post('http://localhost:3000/employees', employeeData);
 };

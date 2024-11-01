@@ -6,7 +6,10 @@ import ORoutes from './routes/organisationRoutes';
 import './config/database';  // Connect to MongoDB
 
 const app = express();
-app.use(cors()); // Enable CORS
+  
+// Enable CORS
+app.use(cors());
+// app.use(cors({ origin: 'http://localhost:2000' }));
 
 app.use(express.json());
 
