@@ -2,6 +2,7 @@
 import { Request, Response } from 'express';
 import * as organisationService from '../service/organisationService';
 import { Organisation, Employee } from '../models/types';
+import OrganisationModel from '../models/organisationModel';
 
 
 // Create a new organisation
@@ -139,3 +140,25 @@ export const addClientToOrg = async (req: Request, res: Response) => {
         res.status(500).json({ message: 'Error adding client to organisation', error: error.message });
     }
 };
+
+// Fetch the maximum org_id
+export const getMaxOrgId = async (req: Request, res: Response) => {
+    console.log("Fetching max organisation ID");
+  
+    try {
+      // Find the organisation with the maximum org_id
+      const maxOrganisation = await OrganisationModel.findOne({}, { org_id: 1 }) // Retrieve only the org_id field
+        .sort({ org_id: -1 }) // Sort in descending order to get the max id
+        .limit(1); // Limit to 1 result
+  
+      // If maxOrganisation is found, extract the org_id; otherwise, set it to 0
+      const maxId = maxOrganisation ? maxOrganisation.org_id : 0;
+  
+      // Send back the max org_id as a JSON response
+      res.status(200).json({ max_org_id: maxId });
+    } catch (error) {
+      console.error(`Error fetching max org_id: ${error}`);
+      res.status(500).json({ error: `Error fetching maximum org_id: ${error}` });
+    }
+  };
+  

@@ -1,9 +1,10 @@
 import express from 'express';
-import { createOrg, getAllOrg, getOrgById, updateOrg  , deleteOrg, getProjectsByOrgId,getEmployeesByOrgId,getClientsByOrgId, addProjectToOrg,addClientToOrg,addEmployeeToOrg} from '../controller/organisationController';
+import { createOrg, getAllOrg, getOrgById, updateOrg  , deleteOrg, getProjectsByOrgId,getEmployeesByOrgId,getClientsByOrgId, addProjectToOrg,addClientToOrg,addEmployeeToOrg, getMaxOrgId} from '../controller/organisationController';
 
 const router = express.Router();
 
-router.post('/Org', createOrg );
+router.post('/Orgp', createOrg );
+router.get('/Orgp', getMaxOrgId);
 router.get('/Org', getAllOrg );
 router.get('/Org/:id', getOrgById );
 router.put('/Org/:id', updateOrg );
