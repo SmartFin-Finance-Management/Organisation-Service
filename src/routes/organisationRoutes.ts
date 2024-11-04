@@ -1,5 +1,5 @@
 import express from 'express';
-import { createOrg, getAllOrg, getOrgById, updateOrg  , deleteOrg, getProjectsByOrgId,getEmployeesByOrgId,getClientsByOrgId, addProjectToOrg,addClientToOrg,addEmployeeToOrg, getMaxOrgId} from '../controller/organisationController';
+import { createOrg, getAllOrg, getOrgById, updateOrg  , deleteOrg, getProjectsByOrgId,getEmployeesByOrgId,getClientsByOrgId, addProjectToOrg,addClientToOrg,addEmployeeToOrg, getMaxOrgId, getProjectsBudgetDetailsByOrgId} from '../controller/organisationController';
 
 const router = express.Router();
 
@@ -15,5 +15,7 @@ router.get('/:orgId/clients', getClientsByOrgId);
 router.post('/:orgId/projects', addProjectToOrg);
 router.post('/:orgId/clients', addClientToOrg);
 router.post('/:orgId/employees', addEmployeeToOrg);
+
+router.get('/:orgId/projects/budget_details', getProjectsBudgetDetailsByOrgId);
 
 export default router;

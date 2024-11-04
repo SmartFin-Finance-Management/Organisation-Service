@@ -1,8 +1,9 @@
 // controllers/organisationController.ts
 import { Request, Response } from 'express';
 import * as organisationService from '../service/organisationService';
-import { Organisation, Employee } from '../models/types';
+import { Organisation, Employee, Project } from '../models/types';
 import OrganisationModel from '../models/organisationModel';
+import axios from 'axios';
 
 
 // Create a new organisation
@@ -162,3 +163,37 @@ export const getMaxOrgId = async (req: Request, res: Response) => {
     }
   };
   
+// Fetch all projects in the organization and calculate budget details
+export const getProjectsBudgetDetailsByOrgId = async (req: Request, res: Response) => {
+    const orgId = req.params.orgId;
+
+    try {
+        // Fetch all projects associated with the given organization ID
+        const response = await axios.get(`http://localhost:4000/projects/orgs/${orgId}`);
+        const projects: Project[] = response.data; // Assuming the response contains the projects array
+
+        // Initialize totals
+        let totalBudget = 0;
+        let totalSpent = 0;
+
+        // Calculate total budget and total spent
+        projects.forEach((project: Project) => {
+            totalBudget += project.total_budget;
+            totalSpent += project.actual_expenses; // Assuming actual_expenses represents the spent amount
+        });
+
+        // Calculate remaining budget
+        const remainingBudget = totalBudget - totalSpent;
+
+        // Return the calculated budget details along with the projects
+        res.status(200).json({
+            total_budget: totalBudget,
+            spent: totalSpent,
+            remaining: remainingBudget,
+            projects: projects // Optionally return the projects data
+        });
+    } catch (error: any) {
+        console.error(`Error fetching projects budget details for org ID ${orgId}: ${error.message}`);
+        res.status(500).json({ message: 'Error fetching projects budget details', error: error.message });
+    }
+};
