@@ -32,7 +32,7 @@ export const getAllOrg = async (_req: Request, res: Response) => {
 export const getOrgById = async (req: Request, res: Response) => {
     try {
         const organisation = await organisationService.getOrgById(req.params.id);
-        if (!organisation)  res.status(404).json({ message: 'Organisation not found' });
+        if (!organisation) res.status(404).json({ message: 'Organisation not found' });
         else res.json(organisation);
     } catch (error) {
         res.status(500).json({ message: "Error fetching organisation" });
@@ -45,7 +45,7 @@ export const updateOrg = async (req: Request, res: Response) => {
 
     try {
         const organisation = await organisationService.updateOrg(req.params.id, organisationData);
-        if (!organisation)res.status(404).json({ message: 'Organisation not found' });
+        if (!organisation) res.status(404).json({ message: 'Organisation not found' });
         else res.json(organisation);
     } catch (error) {
         res.status(400).json({ message: "Error updating organisation" });
@@ -78,7 +78,7 @@ export const addEmployeeToOrg = async (req: Request, res: Response) => {
 
 // Fetch employees by organisation ID
 export const getEmployeesByOrgId = async (req: Request, res: Response) => {
-    const orgId =req.params.orgId;
+    const orgId = req.params.orgId;
 
     try {
         const response = await organisationService.getEmployeesByOrgId(orgId);
@@ -91,7 +91,7 @@ export const getEmployeesByOrgId = async (req: Request, res: Response) => {
 // Fetch projects by organisation ID
 export const getProjectsByOrgId = async (req: Request, res: Response) => {
     const orgId = req.params.orgId;
-
+    console.log(req.body);
     try {
         const response = await organisationService.getProjectsByOrgId(orgId);
         res.status(200).json(response.data);
@@ -114,16 +114,19 @@ export const getClientsByOrgId = async (req: Request, res: Response) => {
 
 // Add a new project to an organisation
 export const addProjectToOrg = async (req: Request, res: Response) => {
-    const orgId = req.params.orgId;
+
+    const orgId = parseInt(req.params.orgId, 10);
     const projectData = req.body;
 
+    console.log(projectData)
     projectData.org_id = orgId;
+    console.log(projectData)
 
     try {
-        const response = await organisationService.addProjectToOrg(orgId, projectData);
+        const response = await organisationService.addProjectToOrg(projectData);
         res.status(201).json(response.data);
     } catch (error: any) {
-        res.status(500).json({ message: 'Error adding project to organisation', error: error.message });
+        res.status(500).json({ message: 'Error adding project to organisation' + error, error: error.message });
     }
 };
 
@@ -145,24 +148,24 @@ export const addClientToOrg = async (req: Request, res: Response) => {
 // Fetch the maximum org_id
 export const getMaxOrgId = async (req: Request, res: Response) => {
     console.log("Fetching max organisation ID");
-  
+
     try {
-      // Find the organisation with the maximum org_id
-      const maxOrganisation = await OrganisationModel.findOne({}, { org_id: 1 }) // Retrieve only the org_id field
-        .sort({ org_id: -1 }) // Sort in descending order to get the max id
-        .limit(1); // Limit to 1 result
-  
-      // If maxOrganisation is found, extract the org_id; otherwise, set it to 0
-      const maxId = maxOrganisation ? maxOrganisation.org_id : 0;
-  
-      // Send back the max org_id as a JSON response
-      res.status(200).json({ max_org_id: maxId });
+        // Find the organisation with the maximum org_id
+        const maxOrganisation = await OrganisationModel.findOne({}, { org_id: 1 }) // Retrieve only the org_id field
+            .sort({ org_id: -1 }) // Sort in descending order to get the max id
+            .limit(1); // Limit to 1 result
+
+        // If maxOrganisation is found, extract the org_id; otherwise, set it to 0
+        const maxId = maxOrganisation ? maxOrganisation.org_id : 0;
+
+        // Send back the max org_id as a JSON response
+        res.status(200).json({ max_org_id: maxId });
     } catch (error) {
-      console.error(`Error fetching max org_id: ${error}`);
-      res.status(500).json({ error: `Error fetching maximum org_id: ${error}` });
+        console.error(`Error fetching max org_id: ${error}`);
+        res.status(500).json({ error: `Error fetching maximum org_id: ${error}` });
     }
-  };
-  
+};
+
 // Fetch all projects in the organization and calculate budget details
 export const getProjectsBudgetDetailsByOrgId = async (req: Request, res: Response) => {
     const orgId = req.params.orgId;
