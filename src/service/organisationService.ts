@@ -63,6 +63,7 @@ export const addProjectToOrg = async (orgId: string, projectData:Project ) => {
     return await axios.post('http://localhost:4000/projects', projectData);
 };
 
+
 // Add a new client to an organisation
 export const addClientToOrg = async (orgId: string, clientData: Client) => {
     clientData.org_id =parseInt(orgId, 10);
