@@ -21,8 +21,8 @@ export const updateOrg = async (id: string, data: Partial<Organisation>) => {
 // Delete an organisation by ID
 
 export const deleteOrg = async (id: string) => {
-     await OrganisationModel.findOne({org_id: id});
-     return await OrganisationModel.findOneAndDelete({org_id: id});
+    await OrganisationModel.findOne({ org_id: id });
+    return await OrganisationModel.findOneAndDelete({ org_id: id });
 };
 
 // Fetch all organisations
@@ -58,15 +58,15 @@ export const getClientsByOrgId = async (orgId: string) => {
 };
 
 // Add a new project to an organisation
-export const addProjectToOrg = async (orgId: string, projectData:Project ) => {
-    projectData.org_id = parseInt(orgId, 10);
+export const addProjectToOrg = async (projectData: Project) => {
+
     return await axios.post('http://localhost:4000/projects', projectData);
 };
 
 
 // Add a new client to an organisation
 export const addClientToOrg = async (orgId: string, clientData: Client) => {
-    clientData.org_id =parseInt(orgId, 10);
+    clientData.org_id = parseInt(orgId, 10);
     return await axios.post('http://localhost:8008/clients', clientData);
 };
 // Add a new employee to an organisation
